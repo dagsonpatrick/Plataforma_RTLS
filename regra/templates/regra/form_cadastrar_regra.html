@@ -1,0 +1,129 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                          <h3 class="box-title">Cadastrar Regra</h3>
+                        </div>
+                        <div class="box-body">
+                            <form class="form-horizontal" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nome</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Nome" required>
+                                {{form_regra.name.errors}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Descrição</label>
+                                <div class="col-sm-6">
+                                    <input type="text" id="description" name="description" class="form-control" placeholder="Descrição" required>
+                                {{form_regra.description.errors}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tempo de Permanência </label>
+                                <div class="col-sm-6">
+                                  <input type="time" id="tempPermanencia" name="tempPermanencia">&nbsp&nbsp( hh:mm )
+                                    {{form_regra.tempPermanencia.errors}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Plano</label>
+                                <div class="col-sm-6">
+                                     <select id="plan" name="plan" class="form-control select2" style="width: 100%;">
+                                       {% for plano in planos %}
+                                      <option value="{{plano.id}}">{{plano.nome}}  </option>
+                                       {% endfor %}
+                                    </select>
+                                {{form_regra.plan.errors}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Dispositivo I/O</label>
+                                <div class="col-sm-6">
+                                     <select id="mio" name="mio" class="form-control select2" style="width: 100%;">
+                                       {% for mio in mios %}
+                                      <option value="{{mio.id}}">{{mio.name}}  </option>
+                                       {% endfor %}
+                                    </select>
+                                {{form_regra.mio.errors}}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Tipo do Evento I/O</label>
+                                <div class="col-sm-6">
+                                     <select id="event" name="event" class="form-control select2" style="width: 100%;">
+                                        <option value="Saida" selected="selected">Saida</option>
+                                        <option value="Entrada">Entrada</option>
+                                    </select>
+                                {{form_regra.event.errors}}
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">Ação Saída</label>
+                                 <div class="col-sm-2">
+                                    <select id="action" name="action" class="form-control select2" >
+                                      <option selected="selected">Ativar</option>
+                                      <option>Desativar</option>
+                                    </select>
+                                 </div>
+                                  <label class="col-sm-2 control-label">Porta</label>
+                                  <div class="col-sm-2">
+                                    <select id="portout" name="portout" class="form-control select2">
+                                      <option value="1" selected="selected">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                    </select>
+                                  </div>
+                             </div>
+
+
+                               <div class="form-group">
+                                    <label class="col-sm-2 control-label">Porta Entrada</label>
+                                   <div class="col-sm-2">
+                                        <select id="portin" name="portin" class="form-control select2" style="width: 100%;">
+                                            <option value="0" selected="selected"></option>
+                                            <option value="1" >1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                   </div>
+                                    <label class="col-sm-2 control-label">Estado</label>
+                                   <div class="col-sm-2">
+                                    <select id="state" name="state" class="form-control select2" style="width: 100%;">
+                                      <option value="0" selected="selected"></option>
+                                        <option value="Aberta">Aberta</option>
+                                        <option value="Fechada">Fechada</option>
+                                    </select>
+                                   </div>
+                                </div>
+
+
+
+                                <div class="box-footer">
+                                    <a href="{{request.META.HTTP_REFERER}}" class="btn btn btn-danger btn-flat pull-left">Voltar</a>
+                                    <input type="submit" class="btn btn-success btn-flat pull-right" value="Cadastrar">
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+{% endblock conteudo %}

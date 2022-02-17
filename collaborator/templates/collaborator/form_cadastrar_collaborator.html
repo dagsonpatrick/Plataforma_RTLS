@@ -1,0 +1,64 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Cadastrar novo Colaborador</h3>
+            </div>
+
+      <form class="form-horizontal" method="post"  enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="box-body">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Nome</label>
+            <div class="col-sm-6">
+                <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Nome" required>
+            {{form_collaborator.first_name.errors}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Sobrenome</label>
+            <div class="col-sm-6">
+                <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Sobrenome" required>
+            {{form_collaborator.last_name.errors}}
+            </div>
+        </div>
+
+        <div class="form-group">
+           <label class="col-sm-2 control-label">E-mail</label>
+            <div class="col-sm-6">
+                <input type="text" id="email" name="email" class="form-control" placeholder="email" required>
+            {{form_collaborator.email.errors}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Foto de perfil</label>
+            <div class="col-sm-6">
+              <input type="file" id="foto" name="foto" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-6">
+                <a href="{{request.META.HTTP_REFERER}}" class="btn btn btn-primary">Voltar</a>
+                <input type="submit" class="btn btn-success" value="Cadastrar">
+            </div>
+        </div>
+        </div>
+      </form>
+    </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock conteudo %}

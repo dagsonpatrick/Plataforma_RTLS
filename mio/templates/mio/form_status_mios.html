@@ -1,0 +1,68 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Main content -->
+    <section class="content">
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="box box-primary">
+
+            <div class="box-header">
+              <h3 class="box-title">Status dos Dispositivos de I/O</h3>
+            </div>
+
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>Nome</th>
+                  <th>Descrição</th>
+                  <th>IP</th>
+                  <th style="width: 10px">Porta</th>
+                  <th>Status I/O </th>
+                  <th>Host Listener</th>
+                  <th style="width: 10px">Porta</th>
+                  <th>Status Serviço</th>
+                    <th style="width: 10px"></th>
+                    <th style="width: 10px"></th>
+
+                </tr>
+                {% for mio in mios %}
+              <form action="" method="post">
+              {% csrf_token %}
+
+                <tr>
+                    <td>{{mio.name}}</td>
+                    <td>{{mio.description}}</td>
+                    <td>{{mio.ip}}</td>
+                    <td>{{mio.port}}</td>
+                    <td>{{mio.status}}</td>
+                    <td>{{mio.hostListener}}</td>
+                    <td>{{mio.portListener}}</td>
+                    <td>{{mio.status_service}}</td>
+
+
+
+                </tr>
+
+              </form>
+
+                {% endfor %}
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+
+
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock conteudo %}

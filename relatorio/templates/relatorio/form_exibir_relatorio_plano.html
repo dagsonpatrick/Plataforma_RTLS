@@ -1,0 +1,350 @@
+{% extends 'relatorio_plano.html' %}
+{% load static %}
+
+
+{% block relatorio %}
+
+{% for r in dados.relatorio_plano %}
+
+
+
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <!-- Área Fria -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>{{r.qtd_online}}</h3>
+
+              <p>Pessoa (s)</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person"></i>
+            </div>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#modal-info">Mais info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+
+        <!-- Taxa de Acesso -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{r.qtd_eventos}}</h3>
+
+              <p>Taxa de Acesso</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#modal-success">Mais info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <!-- Colaboradores -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{r.qtd_colaboradores}}</h3>
+
+              <p>Colaboradores</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-users"></i>
+            </div>
+            <a href="#" class="small-box-footer" data-toggle="modal" data-target="#modal-warning">Mais info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+<!-- Área Fria -->
+<div class="modal modal-info fade" id="modal-info">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Colaboradores Online na Área Fria</h4>
+              </div>
+
+            <div class="box-body">
+                <table id="example2" class="table table-bordered table-striped">
+                <thead>
+                 <tr>
+                  <th style="width: 4%">Colaborador</th>
+                  <th style="width: 4%">Entrada</th>
+                  <th style="width: 5%">Permanência</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for registro in r.colaboradores_online %}
+                <tr>
+                  <td><i class="fa fa-circle text-success"></i>  {{registro.idcolaborador.first_name}} {{registro.idcolaborador.last_name}}</td>
+                  <td>{{registro.dtInicio|date:'d/m/Y H:i:s' }}</td>
+                  <td>{{ registro.permanencia|time:'H:i:s'}}</td>
+                </tr>
+                {% endfor %}
+                 </tbody>
+                <tfoot>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Entrada</th>
+                  <th>Permanencia</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+<!-- /.modal -->
+<div class="modal modal-danger fade" id="modal-danger">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                 <h4 class="modal-title">Histórico de Permanência na {{r.plano.nome }}</h4>
+              </div>
+               <div class="box-body">
+                   	<table id="example1" class="table table-bordered table-striped">
+                <thead>
+                 <tr>
+                  <th style="width: 3%">Colaborador</th>
+                  <th style="width: 3%">Entrada</th>
+                  <th style="width: 9%">Permanência</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for registro in r.eventos_plano %}
+                <tr>
+                  <td>{{registro.idcolaborador.first_name}} {{registro.idcolaborador.last_name}}</td>
+                  <td>{{registro.dtInicio|date:'d/m/Y H:i:s' }}</td>
+                  <td>{{ registro.permanencia|time:'H:i:s'}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Entrada</th>
+                  <th>Permanência</th>
+                </tr>
+                </tfoot>
+              </table>
+
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+<!-- /.modal -->
+<div class="modal modal-success fade" id="modal-success">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Taxa de Acesso na {{r.plano.nome }}</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+                  <div id="piechart" ></div>
+                  <body id="acesso" data-acesso="{{  r.acessos  }}"></body>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+<!-- /.modal -->
+<div class="modal modal-warning fade" id="modal-warning">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Colaboradores que Acessaram a {{r.plano.nome }}</h4>
+              </div>
+
+                {% for colaborador in r.lista_colaboradores %}
+                <!-- Widget: user widget style 1 -->
+              <div class="box box-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header">
+                  <div class="widget-user-image">
+                    <img class="img-circle" src="/media/{{colaborador.foto}}" alt="User Avatar">
+                  </div>
+                  <!-- /.widget-user-image -->
+                  <h3 class="widget-user-username">{{colaborador.first_name}} {{colaborador.last_name}}</h3>
+                  <h5 class="widget-user-desc">{{colaborador.email}}</h5>
+                </div>
+              </div>
+              {% endfor %}
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Sair</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+<!-- /.modal -->
+
+
+<div class="row">
+        <div class="col-xs-12">
+          <div class="box box-solid">
+            <div class="box-header">
+              <i class="fa fa fa-users"></i>
+
+              <h3 class="box-title">Colaboradores</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                  {% for registro in r.colaboradores_online %}
+                <div class="col-xs-6 col-md-3 text-center">
+                    <div class="knob-label">Minutos</div>
+                  <input type="text" class="knob" value="{{ registro.permanencia|time:'i'}}" data-skin="tron" data-thickness="0.2" data-width="120" data-height="120" data-fgColor="#3c8dbc" data-readonly="true">
+
+                  <div class="knob-label">{{registro.idcolaborador.first_name}} {{registro.idcolaborador.last_name}}</div>
+                </div>
+                  {% endfor %}
+
+
+                <!-- ./col -->
+
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+<!-- /.row -->
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+var acessos = document.getElementById("acesso").getAttribute("data-acesso");
+
+var str="";
+   for(var i = 0; i < acessos.length; i++){
+     str += acessos[i].replace('[', "");
+   }
+   var str2="";
+   for(var i = 0; i < str.length; i++){
+   str2 += str[i].replace(']', "");
+   }
+   var str3="";
+   for(var i = 0; i < str2.length; i++){
+   str3 += str2[i].replace("'", "");
+   }
+   var str4="";
+   for(var i = 0; i < str3.length; i++){
+   str4 += str3[i].replace("{", "");
+   }
+   var str5="";
+   for(var i = 0; i < str4.length; i++){
+   str5 += str4[i].replace("}", "");
+   }
+
+obj={};
+var KeyVal = str5.split(",");
+var i;
+for (i in KeyVal) {
+KeyVal[i] = KeyVal[i].split(",");
+obj[KeyVal[i][0]]=KeyVal[i][1];
+}
+acessos=KeyVal;
+
+var matriz = [];
+
+var chaves = Object.keys(acessos)
+  for (var i = 0; i < chaves.length; i++){
+    var propriedade = acessos[chaves[i]];
+    matriz.push(propriedade);
+    }
+
+
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+
+function drawChart() {
+    /*var resultante = [];
+    resultante.push("['"+matriz[0,0] +"','"+ matriz[0,1] + "']");
+    resultante.push("['"+matriz[2] +"',"+ matriz[3] + "]");
+    resultante.push("['"+matriz[4] +"',"+ matriz[5] + "]");
+    resultante.push("['"+matriz[6] +"',"+ matriz[7] + "]");
+    resultante.push("['"+matriz[8] +"',"+ matriz[9] + "]");
+    resultante.push("['"+matriz[10] +"',"+ matriz[11] + "]");
+    resultante.push("['"+matriz[12] +"',"+ matriz[13] + "]"); */
+    var newData = [
+                    [matriz[0,0],matriz[0,1]],
+                    [String(matriz[2]), parseInt(matriz[3]) ],
+                    [String(matriz[4]), parseInt(matriz[5])],
+                    [String(matriz[6]), parseInt(matriz[7])],
+                    [String(matriz[8]), parseInt(matriz[9])],
+                    [String(matriz[10]), parseInt(matriz[11])],
+                    [String(matriz[12]), parseInt(matriz[13])]
+                   ];
+
+    var dataTable = new google.visualization.DataTable();
+   // determine the number of rows and columns.
+    var numRows = newData.length;
+    var numCols = newData[0].length;
+
+  // in this case the first column is of type 'string'.
+  dataTable.addColumn('string', newData[0][0]);
+
+  // all other columns are of type 'number'.
+  for (var i = 1; i < numCols; i++)
+    dataTable.addColumn('number', newData[0][i]);
+
+  // now add the rows.
+  for (var i = 1; i < numRows; i++)
+    dataTable.addRow(newData[i]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Taxa de Acesso ao Plano por Colaborador', 'width':550, 'height':400};
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(dataTable, options);
+}
+</script>
+
+{% endfor %}
+
+{% endblock relatorio %}

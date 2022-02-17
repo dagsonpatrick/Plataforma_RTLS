@@ -1,0 +1,75 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-primary">
+
+                <div class="box-header">
+                    <h3 class="box-title">Dados coletados</h3>
+                </div>
+
+
+           <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                 <tr>
+                  <th style="width: 3%">ID</th>
+                  <th style="width: 3%">Address</th>
+                  <th style="width: 9%">Place ID</th>
+                  <th>Plance Name</th>
+                  <th style="width: 10%">Battery</th>
+                  <th style="width: 5%">Temperature</th>
+                  <th style="width: 20%">UTC Date</th>
+                  <th style="width: 20%">UTC Connector</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for registro in coletores %}
+                <tr>
+                  <td>{{registro.id}}</td>
+                  <td>{{registro.address}}</td>
+                  <td>{{registro.place_id}}</td>
+                  <td>{{registro.place_name}}</td>
+
+                  <td>
+                    <div class="progress active">
+                        <div class="progress-bar progress-bar-success progress-bar-striped"  role="progressbar" aria-valuenow="{{registro.battery}}" aria-valuemin="0" aria-valuemax="100" style="width: {{registro.battery}}%">
+                          <span class="">{{registro.battery}}% </span>
+                        </div>
+                    </div>
+                  </td>
+                  <td><span class="badge bg-red">{{registro.temperature}} C°</span></td>
+                  <td>{{registro.utcdate}}</td>
+                  <td>{{registro.connector_utcdate}}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Address</th>
+                  <th>Place ID</th>
+                  <th>Plance Name</th>
+                  <th>Battery</th>
+                  <th>Temperature</th>
+                  <th>UTC Date</th>
+                  <th>UTC Connector</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock conteudo %}

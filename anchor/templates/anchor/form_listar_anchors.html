@@ -1,0 +1,64 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-primary">
+
+                <div class="box-header">
+              <h3 class="box-title">Âncoras cadastradas</h3>
+
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>ID</th>
+                  <th>Descrição</th>
+                  <th tyle="width: 60px">Address IP</th>
+
+                  <th style="width: 10px"></th>
+                  <th style="width: 10px"></th>
+                </tr>
+                {% for anchor in anchors %}
+              <form action="" method="post">
+              {% csrf_token %}
+
+                <tr>
+                  <td>{{anchor.id}}</td>
+                  <td>{{anchor.description}}</td>
+                  <td>{{anchor.address}}</td>
+
+                  <td>
+                    <span class="input-group-btn">
+                      <a href="{% url 'editar_anchor' anchor.id %}" class="btn btn-info btn-xs">Editar</a>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="input-group-btn">
+                      <a href="{% url 'remover_anchor' anchor.id %}" class="btn btn-danger btn-xs">Excluir</a>
+                    </span>
+                  </td>
+                </tr>
+
+              </form>
+        {% endfor %}
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+
+
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock conteudo %}

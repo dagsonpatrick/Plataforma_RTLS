@@ -1,0 +1,67 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-primary">
+
+                <div class="box-header">
+              <h3 class="box-title">Colaboradores cadastrados</h3>
+
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th style="width: 5px">ID</th>
+                  <th style="width: 10px"></th>
+                  <th>Nome</th>
+                  <th>Sobrenome</th>
+                  <th>Email</th>
+                  <th style="width: 10px"></th>
+                  <th style="width: 10px"></th>
+                </tr>
+                {% for collaborator in collaborators %}
+              <form action="" method="post">
+              {% csrf_token %}
+
+                <tr>
+                  <td>{{collaborator.id}}</td>
+                  <td><img class="direct-chat-img" src="/media/{{collaborator.foto}}" alt=""></td>
+                  <td>{{collaborator.first_name}}</td>
+                  <td>{{collaborator.last_name}}</td>
+                  <td>{{collaborator.email}}</td>
+
+                  <td>
+                    <span class="input-group-btn">
+                      <a href="{% url 'editar_collaborator' collaborator.id %}" class="btn btn-info btn-xs">Editar</a>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="input-group-btn">
+                      <a href="{% url 'remover_collaborator' collaborator.id %}" class="btn btn-danger btn-xs">Excluir</a>
+                    </span>
+                  </td>
+                </tr>
+
+              </form>
+        {% endfor %}
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+
+
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+{% endblock conteudo %}

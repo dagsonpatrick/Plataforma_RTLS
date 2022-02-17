@@ -1,0 +1,93 @@
+{% extends 'form_monitoramento_dep.html' %}
+{% load static %}
+
+{% block planos %}
+
+{% for plano in lista_planos_select.planos %}
+
+
+
+<div class="row">
+       <div class="col-md-12">
+
+              <div class="box box-primary direct-chat direct-chat-warning">
+                <div class="box-header with-border">
+                  <h3 class="box-title">{{ plano.nome}}</h3>
+                  <div class="box-tools pull-right">
+                    <span data-toggle="tooltip" title="3 Pessoas no plano" class="badge bg-yellow">{{plano.qtd_tags}}</span>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Colaboradores"
+                            data-widget="chat-pane-toggle">
+                      <i class="fa fa-users"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
+                  </div>
+                  </div>
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    <form class="form-horizontal">
+                        <div class="form-group"></div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Descrição</label>
+                      <div class="col-sm-6">
+                        <input type="text" id="descricao" name="descricao" class="form-control"  placeholder="Descrição da área" value="{{ plano.descricao }}" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Âncoras Associadas</label>
+                      <div class="col-sm-6">
+                          <select class="form-control select2" style="width: 100%;">
+                               {% for anchor in plano.anchors %}
+                              <option value="">{{anchor.description}}</option>
+                              {% endfor %}
+                            </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Foto</label>
+                      <div class="col-sm-10">
+                        <img class="img-responsive" src="/media/{{plano.foto}}" alt="">
+                      </div>
+                    </div>
+                    </form>
+                  <!-- Contacts are loaded here -->
+                  <div class="direct-chat-contacts">
+                    <ul class="contacts-list">
+                    {% for evento in plano.eventos%}
+                      <li>
+                        <a href="#">
+                          <img class="contacts-list-img" src="/media/{{evento.idcolaborador.foto}}" alt="User Image">
+
+                          <div class="contacts-list-info">
+                                    <span class="contacts-list-name">
+                                      {{evento.idtag.description}}</span>
+                                   <span class="contacts-list-name">
+                                      {{evento.idcolaborador.first_name}} {{evento.idcolaborador.last_name}}
+                                    </span>
+
+                                    <span class="contacts-list-msg">Tempo de Permanência: {{evento.permanencia }}</span>
+                          </div>
+                          <!-- /.contacts-list-info -->
+                        </a>
+                      </li>
+                      <!-- End Contact Item -->
+                        {% endfor %}
+                    </ul>
+                    <!-- /.contatcts-list -->
+                  </div>
+                  <!-- /.direct-chat-pane -->
+                </div>
+                <!-- /.box-body -->
+
+              </div>
+       </div>
+  </div>
+
+
+{% endfor %}
+
+{% endblock planos %}

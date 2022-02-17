@@ -1,0 +1,46 @@
+{% extends 'indexBase.html' %}
+{% load static %}
+{% block conteudo %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                     <div class="form-group">
+                        <label class="col-sm-2 control-label">Selecione o Plano</label>
+                        <form action="{% url 'listar_plano_monitoramento' %}" method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="col-sm-4">
+                           <select id="plano" name="plano" class="form-control select2" style="width: 100%;">
+                               {% for plano in planos %}
+                              <option value="{{plano.id}}">{{plano.nome}}</option>
+                              {% endfor %}
+                            </select>
+
+                        </div>
+                         <div class="col-sm-1">
+                            <div class="input-group input-group-sm">
+                             <div class="input-group-btn">
+                                <input type="submit" class="btn btn-primary" value="Buscar"> </input>
+                            </div>
+                            </div>
+                         </div>
+                         </form>
+                     </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+        {% block planos %}
+
+
+
+        {% endblock planos %}
+    </section>
+
+
+{% endblock conteudo %}
